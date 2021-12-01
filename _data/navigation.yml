@@ -3,9 +3,13 @@ main:
   #- title: "Quick-Start Guide"
   #  url: https://mmistakes.github.io/minimal-mistakes/docs/quick-start-guide/
   - title: "About"
+    url: https://qgiaong.github.io/giaonq/about/
   - title: "Machine Learning Projects"
+    url: https://qgiaong.github.io/giaonq/machine-learning/
   - title: "Coding Projects"
+    url: https://qgiaong.github.io/giaonq/coding/
   - title: "Miscellaneous"
+    url: https://qgiaong.github.io/giaonq/miscellaneous/
   #   url: https://mmistakes.github.io/minimal-mistakes/about/
   # - title: "Sample Posts"
   #   url: /year-archive/
