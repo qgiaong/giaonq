@@ -2,7 +2,7 @@
 layout: post
 title:  "Face Mask Detector"
 categories:
-  - Machine Learning
+  - machine-learning
 tags:
   - deep learning
   - machine learning
