@@ -1,5 +1,6 @@
 ---
 layout: post
+author_profile: true
 title:  "Face Mask Detector"
 categories:
   - machine-learning
