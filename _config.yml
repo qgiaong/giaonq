@@ -102,9 +102,9 @@ analytics:
 
 # Site Author
 author:
-  name             : "Giao Nguyen Quynh"
-  avatar           : # path of avatar image, e.g. "/assets/images/bio-photo.jpg"
-  bio              : "I am an **amazing** person."
+  name             : "Giao Nguyen-Quynh"
+  avatar           : "/assets/images/avatar.jpg" # path of avatar image, e.g. 
+  bio              : "Lifelong learner"
   location         : "Germany"
   email            :
   links:
