@@ -290,10 +290,23 @@ for i in range(batch_size):
 
 ```
 We see that the model performance for the class 1 and 2 are worse than for the class 3 ("with_masks"). This can be due to the fact that these 2 classes are underpresented in the training data:
+
+
 ![42](https://user-images.githubusercontent.com/43914109/144233860-9c443518-15b9-40f3-ae80-121a00fd98d3.PNG)
 ![Capture](https://user-images.githubusercontent.com/43914109/144233871-660df07c-d3df-4ffc-9ce0-aacbf1cd0060.PNG)
 ![1](https://user-images.githubusercontent.com/43914109/144233878-abfae2b8-e987-4f34-970d-f5087cb8e067.PNG)
 ![2](https://user-images.githubusercontent.com/43914109/144233887-ceff242c-9f87-4113-abbf-80617fa4b578.PNG)
 ![3](https://user-images.githubusercontent.com/43914109/144233896-11b1873b-17fa-43ed-a1f1-c15582865c34.PNG)
 
+## Save and Load model
+Saving models for later uses and loading the saved models are as easy as follows:
 
+```
+# save model
+torch.save(model.state_dict(),'model.pt')
+
+# load model
+model2 = get_instance_segmentation_model(3)
+model2.load_state_dict(torch.load('model.pt'))
+model2 = model2.to(device)
+```
