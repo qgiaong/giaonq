@@ -299,7 +299,7 @@ We see that the model performance for the class 1 and 2 are worse than for the c
 ![3](https://user-images.githubusercontent.com/43914109/144233896-11b1873b-17fa-43ed-a1f1-c15582865c34.PNG)
 
 ## Save and Load model
-Saving models for later uses and loading the saved models are as easy as follows:
+Saving models for later uses and loading the saved models are as simple as follows:
 
 ```
 # save model
