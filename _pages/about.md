@@ -1,3 +1,4 @@
+permalink: /about/
 # Curriculum Vitae
 
 ## Education
