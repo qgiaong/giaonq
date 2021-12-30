@@ -18,7 +18,7 @@ header:
 We can create a custom dataset using the [Bing Image Downloader took](https://github.com/gurugaurav/bing_image_downloader). Note that the older version 1.0.4 yields much better result than the verion 1.1.1. Download the images for training is as simple as:
 
 
-```
+```python
 from bing_image_downloader import downloader
 #
 for q in food_list:
@@ -32,7 +32,7 @@ I have already prepared a dataset for that. The zip file contains images of 20 V
 ```
 
 In this post, we are going to use the fastai framework for training. First of all, let's import the needed modules:
-```
+```python
 from fastbook import *
 from fastai.vision.widgets import *
 from fastai.callback.fp16 import *
@@ -46,7 +46,7 @@ failed
 ```
 Next, we define a DataBlock object for the training:
 
-```
+```python
 vfoods = DataBlock(
     blocks=(ImageBlock, CategoryBlock), 
     get_items=get_image_files, 
@@ -59,7 +59,7 @@ dls.valid.show_batch(max_n=6, nrows=1)
 ![image](https://user-images.githubusercontent.com/43914109/147765691-cf5c41eb-5c98-46d1-823e-87ebdb37b8d5.png)
 
 To mitigate overfitting, let's add some image augmentation to the dataset:
-```
+```python
 vfoods = vfoods.new(
     item_tfms=RandomResizedCrop(224, min_scale=0.5),
     batch_tfms=aug_transforms())
@@ -70,30 +70,30 @@ dls.train.show_batch(max_n=4, nrows=1, unique=True)
 
 # Define and train model
 We employ the transfer learning technique to train our classificator. To be specific, we reuse the pretrained resnet18 architecture and finetune it on our training data. fastai provides a convenient way to find an appropriate learning rate for the training process:
-```
+```python
 learn = cnn_learner(dls, resnet18, metrics=error_rate).to_fp16()
 learn.lr_find()
 ```
 ![image](https://user-images.githubusercontent.com/43914109/147765725-ce04a0b7-a88f-4b31-9520-8ff14ddb8eca.png)
 
 Finetuning can then be done in one line of code:
-```
+```python
 learn.fine_tune(6, base_lr=0.00145, freeze_epochs=2)
 ```
 ![image](https://user-images.githubusercontent.com/43914109/147765758-a071fcc0-7607-49dc-8be6-c39540ceb1b9.png)
 
-```
+```python
 learn.recorder.plot_loss()
 ```
 
 # Visualize the training result
-```
+```python
 learn.show_results(figsize=(20,10),  max_n=15)
 ```
 ![image](https://user-images.githubusercontent.com/43914109/147765776-4e1f60c7-c794-4196-903a-b442d9a5f820.png)
 
 We can also plot the confusion matrix to see where the model often makes mistakes:
-```
+```python
 interp = ClassificationInterpretation.from_learner(learn)
 interp.plot_confusion_matrix(figsize=(12,12), dpi=60)
 ```
@@ -101,7 +101,7 @@ interp.plot_confusion_matrix(figsize=(12,12), dpi=60)
 
 The confusion matrix might be hard to understand, we can call the `most_confused` function instead:
 
-```
+```python
 interp.most_confused(min_val=5)
 ```
 ```
@@ -113,12 +113,12 @@ interp.most_confused(min_val=5)
 [Streamlit](https://streamlit.io/) offers a fast way to create web apps for data science project. Let's create a simple web app so that one can upload an image and classify it with our trained model. 
 
 First, we need to export the trained model 
-```
+```python
 save_name = "vnmesefood_model"
 learn.export(save_name)
 ```
 To create a Streamlit app, create an "app.py" file and add the following requirements:
-```
+```python
 import streamlit as st
 from fastai.vision.all import *
 from fastai.vision.widgets import *
@@ -130,7 +130,7 @@ import streamlit as st
 import matplotlib.pyplot as plt
 ```
 Then set some global configuration as follows:
-```
+```python
 plt.style.use("seaborn")
 # Enable garbage collection
 gc.enable()
@@ -139,7 +139,7 @@ gc.enable()
 st.set_option("deprecation.showfileUploaderEncoding", False)
 ```
 Next, let's create the web app title and banner:
-```
+```python
 # page title
 st.title('Vietnamese Food Classificator')
 # Set the directory path
@@ -157,13 +157,13 @@ st.write(
 st.markdown('***')
 ```
 We also add an upload button for the user to upload an image:
-```
+```pythonpython
 st.write("**Upload your Image**")
 uploaded_image = st.file_uploader("Upload your image in JPG or PNG format", type=["jpg", "png"])
 ```
 
 Next, we defome a function to display some related plots:
-```
+```python
 def plot_pred(img, learn_inf, k = 5):
     name,_, probs = learn_inf.predict(img)
     ids = np.argsort(-probs)[:k]
@@ -177,7 +177,7 @@ def plot_pred(img, learn_inf, k = 5):
 
 ```
 To make a prediction, we just have to load the trained model as follows:
-```
+```python
 def deploy(file_path=None, uploaded_image=uploaded_image, uploaded=True, demo=True):
     # Load the model and the weights
     learn_inf = load_learner('vnmesefood_model.pkl')
@@ -198,7 +198,7 @@ def deploy(file_path=None, uploaded_image=uploaded_image, uploaded=True, demo=Tr
 ```
 Finally, we just have to call the trained model everytime a new image is uploaded:
 
-```
+```python
 if uploaded_image is not None:
     # Close the demo
     choice = 'Select an Image'
