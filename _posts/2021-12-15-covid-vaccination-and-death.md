@@ -1938,16 +1938,6 @@ plt.legend()
 plt.show()
 ```
 
-    /usr/local/lib/python3.7/dist-packages/ipykernel_launcher.py:3: SettingWithCopyWarning:
-    
-    
-    A value is trying to be set on a copy of a slice from a DataFrame.
-    Try using .loc[row_indexer,col_indexer] = value instead
-    
-    See the caveats in the documentation: https://pandas.pydata.org/pandas-docs/stable/user_guide/indexing.html#returning-a-view-versus-a-copy
-    
-    
-
 
     
 ![png](/_posts/covid/output_45_1.png)
@@ -1955,6 +1945,3 @@ plt.show()
 
 
 
-```python
-
-```
