@@ -8,8 +8,8 @@ tags:
   - machine learning
   - computer vision
 header:
-  image: /assets/images/colors.png
-  teaser: /assets/images/colors.png
+  image: /assets/images/colors.jfif
+  teaser: /assets/images/colors.jfif
 ---
 # Introduction
 In this blog spot, we are going to tackle a Computer Vision problem called Image Colorization. In general, image colorization refers to converting a grayscale image (1 channel) to a full color image (3 channel). This is a challenging process because colorization is multi-modal, in such a way that a grayscale image can be mapped to several plausible colored images. 
@@ -38,10 +38,33 @@ For training, we create a L\*a\*b dataset using existing images and creating gra
 
 Let's collect all the image paths:
 ```
+SEED = 42
+BATCH_SIZE = 32
+N_WORKERS = 2
+HEIGHT = 256
+WIDTH = 256
+```
+```
 path = "/content/data"
 paths = np.array(glob.glob(path + "/*.jpg")) 
 np.random.seed(SEED)
 len(paths)
 ```
-
+and divide the available data in training and validation set:
+```
+rand_idxs = np.random.permutation(4319).astype(int)
+train_idxs = rand_idxs[:3000] 
+val_idxs = rand_idxs[3000:]
+train_paths = paths[train_idxs]
+val_paths = paths[val_idxs]
+print(len(train_paths), len(val_paths))
+```
+```
+# plot some images
+_, axes = plt.subplots(4, 4, figsize=(20, 10))
+for ax, img_path in zip(axes.flatten(), train_paths):
+    img = np.array(Image.open(img_path))
+    ax.imshow(img)
+    ax.axis("off")
+```
 
