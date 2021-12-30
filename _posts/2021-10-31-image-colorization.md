@@ -25,7 +25,7 @@ RGB format is often used to represent color images due to its simplicity. Each c
 Another common color format is the L\*a\*b format. In the L\*a\*b space, we also have 3 values but with different meaning. The first channel, L, represents the lightness of the pixel and contains the image in black-and-white. The *a  and *b values encode how much green-red and yellow-blue each pixel is, respectively. These 3 channels are visualized in the following plot: 
 ![lab](https://user-images.githubusercontent.com/43914109/147781998-6976ccd4-b091-46eb-966e-3210f668a499.png)
 
-It is common for image colorization task to use L\*a\*b instead of RGB format, since we can separate the grayscale part (the lightness channel) directly. Therefore, we can generate the input data for the model directly and can formulate our problem as to reconstruct the  *a  and *b channel from the L channel.
+It is common for image colorization task to use L\*a\*b instead of RGB format, since we can separate the grayscale part (the lightness channel) directly. Therefore, we can generate the input data for the model directly and can formulate our problem as to reconstruct the  *a  and *b channel from the L channel. 
 
 ## Training strategy
 As mentioned above, the task is to reconstruct the full-colored image using only the black-and-white image from the L channel. For this purpose, we adopt the pix2pix model provided by the [_**Image-to-Image Translation with Conditional Adversarial Networks**_](https://arxiv.org/abs/1611.07004) paper. 
@@ -67,4 +67,42 @@ for ax, img_path in zip(axes.flatten(), train_paths):
     ax.imshow(img)
     ax.axis("off")
 ```
-
+## Define the DataLoader
+Next, we should define the data loader that prepare the data for each training epoch. First of all, we must define the transformation function to convert images. We also do some data augmentation for the training set. Besides, scikit-learn provides convenient functions to switch between RGB and L\*a\*b spaces. This class below defines a custom dataset for our task:
+```
+class ColorizationDataset(Dataset):
+    def __init__(self, paths, split='train'):
+        if split == 'train':
+            self.transforms = transforms.Compose([
+                transforms.Resize((HEIGHT, WIDTH)),
+                transforms.RandomHorizontalFlip(), 
+            ])
+        elif split == 'val':
+            self.transforms = transforms.Resize((HEIGHT, WIDTH))
+        self.paths = paths
+    
+    def __getitem__(self, idx):
+        img = Image.open(self.paths[idx]).convert("RGB")
+        img = self.transforms(img)
+        img = np.array(img)
+        img_lab = rgb2lab(img).astype("float32") # Converting RGB to L*a*b
+        img_lab = transforms.ToTensor()(img_lab)
+        L = img_lab[[0], ...] / 50. - 1. 
+        ab = img_lab[[1, 2], ...] / 110. 
+        
+        return {'L': L, 'ab': ab}
+    
+    def __len__(self):
+        return len(self.paths)
+```
+Then we can create a custom data loader. This data loader shuffle the dataset in each iteration:
+```        
+def make_dataloaders(path, split, batch_size=BATCH_SIZE, n_workers=N_WORKERS, pin_memory=True): 
+    dataset = ColorizationDataset(path, split)
+    dataloader = DataLoader(dataset, batch_size=batch_size, num_workers=n_workers,
+                            pin_memory=pin_memory, shuffle=True)
+    return dataloader
+    
+train_dl = make_dataloaders(train_paths, 'train')
+val_dl   = make_dataloaders(val_paths, 'val')
+ ```  
