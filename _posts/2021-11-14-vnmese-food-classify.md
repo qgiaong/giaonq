@@ -1,4 +1,5 @@
 ---
+excerpt: Let us make a classificator for the wonderful Vietnamese dishes!
 author_profile: true
 title:  "Vietnamese Food Classificator"
 categories:
