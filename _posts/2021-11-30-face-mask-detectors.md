@@ -11,6 +11,7 @@ tags:
 header:
   overlay_image: /assets/images/facemask.jpg
   teaser: /assets/images/facemask.jpg
+  overlay_filter: 0.5
 ---
 
 Face masks play a central role in protecting the health of community against COVID-19. In this project, we study the 
@@ -20,7 +21,7 @@ In particular, we will train a neural network for detecting people faces in imag
 
 
 Let first import the needed packages:
-```
+```python
 import os
 import numpy as np
 import pandas as pd
@@ -38,7 +39,7 @@ from bs4 import BeautifulSoup
 ## Prepare Data
 Next, we need some helper function to generate training data from the extracted dataset. We use `BeautifulSoup` package to extract information from the .xml annotation files. Each identified object is assigned an integer label (`"without_masks" = 1, "with_mask" = 2, "mask_weared_incorrect" = 3`), as desired by Pytorch. Besides, the corresponding bounding boxes are also converted to Pytorch format `[xmin, ymin, xmax, ymax]`
 
-```
+```python
 def generate_box(obj):
     # get bounding box coordinates in pytorch format for a given object
     xmin = int(obj.find('xmin').text)
@@ -85,7 +86,7 @@ def generate_target(image_id, file):
 
 ```
 Now we are defining our custom dataset. Our dataset class should inherit from `torch.utils.data.Dataset` and implement the functions `__getitem__` and  `__len__`
-```
+```python
 class MaskDataset(torch.utils.data.Dataset):
   def __init__(self, transforms):
         self.transforms = transforms
@@ -110,7 +111,7 @@ class MaskDataset(torch.utils.data.Dataset):
         return len(self.imgs)
   ```
   We are curious how the masks are distributed. To findout, we read all labels available in the dataset, and use Counter to get the number of each class
- ```
+ ```python
  all_labels = []
 ann_paths =  list(sorted(os.listdir("data/annotations/")))
 for mask_path in ann_paths:
@@ -125,7 +126,7 @@ for mask_path in ann_paths:
           all_labels.append(generate_label(i))
  ```
  
-  ```
+  ```python
   from collections import Counter
 
 class_names = ["without_masks", "with_mask", "mask_weared_incorrect"]
@@ -148,7 +149,7 @@ plt.show()
  
  Next, we define another helper function to display the annotation, with different colors indicating different labels:
 
-```
+```python
 colours = ['r', 'g', 'b']
 def plot_image(img_tensor, annotation, display_ann = True):
     
@@ -175,7 +176,7 @@ def plot_image(img_tensor, annotation, display_ann = True):
 ```
 Let's split the data into training set and test set with `random_split`. As we have 853 data points, we will use 700 of them for training and 153 for testing. We also define the data transformator and our dataloader
 
-```
+```python
 data_transform = transforms.Compose([transforms.ToTensor()])
 def collate_fn(batch):
     return tuple(zip(*batch))
@@ -188,7 +189,7 @@ train_dl = torch.utils.data.DataLoader(
 test_dl = torch.utils.data.DataLoader(
  test_dataset, batch_size=batch_size, collate_fn=collate_fn, shuffle = True)
 ```
-```
+```python
 for imgs, annotations in test_dl: # take one batch for visualizing
       imgs = list(img.to(device) for img in imgs)
       annotations = [{k: v.to(device) for k, v in t.items()} for t in annotations]
@@ -215,7 +216,7 @@ def get_instance_segmentation_model(num_classes):
 
     return model
 
-```
+```python
 Now let's instantiate the model and the optimizer as well as the learning rate scheduler
 ```
 device = torch.device('cuda') if torch.cuda.is_available() else torch.device('cpu')
@@ -231,7 +232,7 @@ optimizer = torch.optim.SGD(params, lr=0.005, momentum=0.9, weight_decay=0.0005)
 lr_scheduler = torch.optim.lr_scheduler.StepLR(optimizer, step_size=3, gamma=0.1)
 ```
 And train the model for several epochs
-```
+```python
 num_epochs = 10
 len_dataloader = len(train_dl)
 
@@ -258,7 +259,7 @@ for epoch in range(num_epochs):
 
 In some case, the loaded model become too large and can take up a lot of memory. It is possible to delete unused variables and empty pytorch cache:
 
-```
+```python
 # avoid CUDA out of memory
 import gc
 gc.collect()
@@ -269,7 +270,7 @@ del losses, imgs, annotations,
 
 We can test the trained model on some unseen images:
 
-```
+```python
 
 batch_size = 8
 test_dl = torch.utils.data.DataLoader(
