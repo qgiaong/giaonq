@@ -106,3 +106,100 @@ interp.most_confused(min_val=5)
  ('goi cuon', 'nem cuon', 8),
  ('bun rieu', 'bun bo hue', 7)]
 ```
+# Create a webapp for the classificator with Streamlit
+[Streamlit](https://streamlit.io/) offers a fast way to create web apps for data science project. Let's create a simple web app so that one can upload an image and classify it with our trained model. 
+
+First, we need to export the trained model 
+```
+save_name = "vnmesefood_model"
+learn.export(save_name)
+```
+To create a Streamlit app, create an "app.py" file and add the following requirements:
+```
+import streamlit as st
+from fastai.vision.all import *
+from fastai.vision.widgets import *
+import gc
+import cv2
+import pandas as pd
+import numpy as np
+import streamlit as st
+import matplotlib.pyplot as plt
+```
+Then set some global configuration as follows:
+```
+plt.style.use("seaborn")
+# Enable garbage collection
+gc.enable()
+
+# Hide warnings
+st.set_option("deprecation.showfileUploaderEncoding", False)
+```
+Next, let's create the web app title and banner:
+```
+# page title
+st.title('Vietnamese Food Classificator')
+# Set the directory path
+my_path = '.'
+
+banner_path = my_path + '/banner.png'
+
+# Read and display the banner
+st.image(banner_path, use_column_width=True)
+
+# App description
+st.write(
+    "**Get the name of the Vietnamese Food ! "
+    "**")
+st.markdown('***')
+```
+We also add an upload button for the user to upload an image:
+```
+st.write("**Upload your Image**")
+uploaded_image = st.file_uploader("Upload your image in JPG or PNG format", type=["jpg", "png"])
+```
+
+Next, we defome a function to display some related plots:
+```
+def plot_pred(img, learn_inf, k = 5):
+    name,_, probs = learn_inf.predict(img)
+    ids = np.argsort(-probs)[:k]
+    top_names = learn_inf.dls.vocab[ids]
+    top_probs = [round(p.numpy() * 100, 2) for p in probs[ids]]
+
+    fig = plt.figure(figsize=(10,6))
+    ax = fig.add_axes([0,0,1,1])
+    ax.bar(top_names,top_probs)
+    return fig
+
+```
+To make a prediction, we just have to load the trained model as follows:
+```
+def deploy(file_path=None, uploaded_image=uploaded_image, uploaded=True, demo=True):
+    # Load the model and the weights
+    learn_inf = load_learner('vnmesefood_model.pkl')
+    st.markdown(image_uploaded_success, unsafe_allow_html=True)
+    st.image(uploaded_image, width=301, channels='BGR')
+
+    # Display the uploaded/selected image
+    st.markdown('***')
+    st.markdown(model_predicting, unsafe_allow_html=True)
+    img = PILImage.create(uploaded_image)
+    pred, pred_idx, probs = learn_inf.predict(img)
+
+    st.write(f'Prediction: {pred}; Probability: {probs[pred_idx]:.04f}')
+    fig = plot_pred(img, learn_inf)
+    st.write(fig)
+
+    gc.collect()
+```
+Finally, we just have to call the trained model everytime a new image is uploaded:
+
+```
+if uploaded_image is not None:
+    # Close the demo
+    choice = 'Select an Image'
+    # Deploy the model with the uploaded image
+    deploy(uploaded_image, uploaded=True, demo=False)
+    del uploaded_image
+```
