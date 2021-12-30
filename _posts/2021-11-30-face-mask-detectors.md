@@ -1,4 +1,5 @@
 ---
+excerpt: detect whether masks are weared correctly :mask:
 author_profile: true
 title:  "Face Mask Detector"
 categories:
