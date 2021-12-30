@@ -9,7 +9,7 @@ tags:
   - computer vision
 header:
   image: /assets/images/bun_bo.jpg
-
+  teaser: /assets/images/bun_bo.jpg
 ---
 
 # Create and prepare the dataset
