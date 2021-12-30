@@ -53,6 +53,8 @@ vfoods = DataBlock(
 dls = vfoods.dataloaders(path)
 dls.valid.show_batch(max_n=6, nrows=1)
 ```
+![image](https://user-images.githubusercontent.com/43914109/147765691-cf5c41eb-5c98-46d1-823e-87ebdb37b8d5.png)
+
 To mitigate overfitting, let's add some image augmentation to the dataset:
 ```
 vfoods = vfoods.new(
@@ -61,16 +63,22 @@ vfoods = vfoods.new(
 dls = vfoods.dataloaders(path, bs = 50)
 dls.train.show_batch(max_n=4, nrows=1, unique=True)
 ```
+![image](https://user-images.githubusercontent.com/43914109/147765708-3f0e0a2c-0d82-40b1-9075-811c16db7249.png)
+
 # Define and train model
 We employ the transfer learning technique to train our classificator. To be specific, we reuse the pretrained resnet18 architecture and finetune it on our training data. fastai provides a convenient way to find an appropriate learning rate for the training process:
 ```
 learn = cnn_learner(dls, resnet18, metrics=error_rate).to_fp16()
 learn.lr_find()
 ```
+![image](https://user-images.githubusercontent.com/43914109/147765725-ce04a0b7-a88f-4b31-9520-8ff14ddb8eca.png)
+
 Finetuning can then be done in one line of code:
 ```
 learn.fine_tune(6, base_lr=0.00145, freeze_epochs=2)
 ```
+![image](https://user-images.githubusercontent.com/43914109/147765758-a071fcc0-7607-49dc-8be6-c39540ceb1b9.png)
+
 ```
 learn.recorder.plot_loss()
 ```
@@ -79,13 +87,22 @@ learn.recorder.plot_loss()
 ```
 learn.show_results(figsize=(20,10),  max_n=15)
 ```
+![image](https://user-images.githubusercontent.com/43914109/147765776-4e1f60c7-c794-4196-903a-b442d9a5f820.png)
+
 We can also plot the confusion matrix to see where the model often makes mistakes:
 ```
 interp = ClassificationInterpretation.from_learner(learn)
 interp.plot_confusion_matrix(figsize=(12,12), dpi=60)
 ```
+![image](https://user-images.githubusercontent.com/43914109/147765785-be8ed4ec-a394-4eae-8550-ff909454b04d.png)
+
 The confusion matrix might be hard to understand, we can call the `most_confused` function instead:
 
 ```
 interp.most_confused(min_val=5)
+```
+```
+[('nem cuon', 'goi cuon', 9),
+ ('goi cuon', 'nem cuon', 8),
+ ('bun rieu', 'bun bo hue', 7)]
 ```
