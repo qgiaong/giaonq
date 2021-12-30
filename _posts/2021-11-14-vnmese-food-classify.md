@@ -38,7 +38,7 @@ from fastai.vision.widgets import *
 from fastai.callback.fp16 import *
 ```
 The path to the image folder can be specified as follows:
-```
+```python
 path = Path('/vnmesefood')
 fns = get_image_files(path)
 failed = verify_images(fns) # check for invalid files
