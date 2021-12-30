@@ -1,6 +1,6 @@
 ---
 author_profile: true
-title:  "Virtnamese Food Classificator"
+title:  "Vietnamese Food Classificator"
 categories:
   - machine-learning
 tags:
@@ -8,6 +8,6 @@ tags:
   - machine learning
   - computer vision
 header:
-  image: /assets/images/bunbo.jpg
+  image: /assets/images/bun_bo.jpg
 
 ---
