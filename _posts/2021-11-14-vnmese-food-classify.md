@@ -178,12 +178,12 @@ To make a prediction, we just have to load the trained model as follows:
 def deploy(file_path=None, uploaded_image=uploaded_image, uploaded=True, demo=True):
     # Load the model and the weights
     learn_inf = load_learner('vnmesefood_model.pkl')
-    st.markdown(image_uploaded_success, unsafe_allow_html=True)
+    st.markdown("image uploaded", unsafe_allow_html=True)
     st.image(uploaded_image, width=301, channels='BGR')
 
     # Display the uploaded/selected image
     st.markdown('***')
-    st.markdown(model_predicting, unsafe_allow_html=True)
+    st.markdown("Predicting...", unsafe_allow_html=True)
     img = PILImage.create(uploaded_image)
     pred, pred_idx, probs = learn_inf.predict(img)
 
@@ -203,3 +203,11 @@ if uploaded_image is not None:
     deploy(uploaded_image, uploaded=True, demo=False)
     del uploaded_image
 ```
+To start the web app, open the terminal and call
+```
+streamlit run app.py
+```
+![image](https://user-images.githubusercontent.com/43914109/147768429-3772d9b4-15e0-422e-b456-f1f3a5e749d9.png)
+
+Voila! You have created a simple web app for food classification with fastai and Streamlit!
+
