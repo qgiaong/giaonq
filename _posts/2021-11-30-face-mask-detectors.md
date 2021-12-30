@@ -303,7 +303,7 @@ We see that the model performance for the class 1 and 2 are worse than for the c
 ## Save and Load model
 Saving models for later uses and loading the saved models are as simple as follows:
 
-```
+```python
 # save model
 torch.save(model.state_dict(),'model.pt')
 
