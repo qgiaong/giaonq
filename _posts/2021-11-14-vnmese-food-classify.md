@@ -8,8 +8,9 @@ tags:
   - machine learning
   - computer vision
 header:
-  image: /assets/images/bun_bo.jpg
+  overlay_image: /assets/images/bun_bo.jpg
   teaser: /assets/images/bun_bo.jpg
+  overlay_filter: 0.5
 ---
 
 # Create and prepare the dataset
