@@ -9,7 +9,7 @@ tags:
   - computer vision
 header:
   image: /assets/images/facemask.jpg
-
+  teaser: /assets/images/facemask.jpg
 ---
 
 Face masks play a central role in protecting the health of community against COVID-19. In this project, we study the 
