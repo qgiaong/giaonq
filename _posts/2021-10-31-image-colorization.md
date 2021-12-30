@@ -8,8 +8,9 @@ tags:
   - machine learning
   - computer vision
 header:
-  image: /assets/images/colors.jfif
+  overlay_image: /assets/images/colors.jfif
   teaser: /assets/images/colors.jfif
+  overlay_filter: 0.5
 ---
 # Introduction
 In this blog spot, we are going to tackle a Computer Vision problem called Image Colorization. In general, image colorization refers to converting a grayscale image (1 channel) to a full color image (3 channel). This is a challenging process because colorization is multi-modal, in such a way that a grayscale image can be mapped to several plausible colored images. 
