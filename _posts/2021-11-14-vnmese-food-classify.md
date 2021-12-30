@@ -9,8 +9,8 @@ tags:
   - machine learning
   - computer vision
 header:
-  overlay_image: /assets/images/bun_bo.jpg
-  teaser: /assets/images/bun_bo.jpg
+  overlay_image: /assets/images/vnmesefood.jpg
+  teaser: /assets/images/vnmesefood.jpg
   overlay_filter: 0.5
 ---
 
