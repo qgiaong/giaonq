@@ -1733,7 +1733,7 @@ plt.show()
 
 
     
-![png](output_39_0.png)
+![png](/_posts/covid/output_39_0.png)
     
 
 
