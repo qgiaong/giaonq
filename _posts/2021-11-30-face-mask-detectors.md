@@ -8,7 +8,7 @@ tags:
   - machine learning
   - computer vision
 header:
-  image: /assets/images/facemask.jpg
+  overlay_image: /assets/images/facemask.jpg
   teaser: /assets/images/facemask.jpg
 ---
 
