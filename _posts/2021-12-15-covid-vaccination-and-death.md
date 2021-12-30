@@ -1131,7 +1131,7 @@ fig = px.choropleth(data_frame=sorted_df, locations='iso_code',
 fig.show()
 ```
 
-{% include_relative _posts/covid/fully_vaccinated.html %}
+{% include_relative covid/fully_vaccinated.html %}
 
 ## Vaccination in Germany over time
 
@@ -1283,7 +1283,7 @@ fig.show()
 ```
 
 
-{% include_relative _posts/covid/de_fully_vaccinated.html %}
+{% include_relative covid/de_fully_vaccinated.html %}
 
 
 Nun sind ungefähr 67,7% der deutschen Gesamtbevölkerung vollständig geimpft (17.11.2021)
@@ -1718,7 +1718,7 @@ fig = px.choropleth(data_frame=df, locations='country',
 fig.show()
 ```
 
-{% include_relative _posts/covid/covid_death.html %}
+{% include_relative covid/covid_death.html %}
 
 
 ```python
@@ -1920,7 +1920,7 @@ fig.update_yaxes(title_text="Number",secondary_y=False)
 fig.show()
 ```
 
-{% include_relative _posts/covid/de_covid_death.html %}
+{% include_relative covid/de_covid_death.html %}
 
 
 We see that excess death is close to covid death
