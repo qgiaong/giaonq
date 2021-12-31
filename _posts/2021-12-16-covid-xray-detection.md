@@ -1,7 +1,7 @@
 ---
-excerpt: use deep learning to classify Covid infection
+excerpt: use deep learning to detect Covid infection on X-ray images
 author_profile: true
-title:  "X-ray Covid infection"
+title:  "Detect Covid Infection on X-ray images"
 categories:
   - data science
 tags:
