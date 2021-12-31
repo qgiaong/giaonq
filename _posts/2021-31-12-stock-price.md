@@ -138,7 +138,7 @@ fig1 = px.line(df_sma, x = 'date', y = 'value', color = 'variable')
 # Show plot
 fig1.show()
 ```
-{% include /assets/images/stocks/macd.html %}
+{% include /assets/images/stocks/macd.html%}
 The resulting plot can be saved as interactive (.html) or static (e.g. .png) images:
 ```python
 fig1.write_image("sma_close.webp")
@@ -146,3 +146,12 @@ fig1.write_html("sma_close.html")
 ```
  
  
+# Create a Slack Bot for notification
+You will need the [slack_sdk](https://pypi.org/project/slack-sdk/) package to make the API calls directly with python:
+```python
+import logging
+import os
+# Import WebClient from Python SDK (github.com/slackapi/python-slack-sdk)
+from slack_sdk import WebClient
+from slack_sdk.errors import SlackApiError
+```python
