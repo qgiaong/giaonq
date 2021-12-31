@@ -611,13 +611,6 @@ sns.heatmap(corrmat, vmax=.8, square=True)
 ```
 
 
-
-
-    <matplotlib.axes._subplots.AxesSubplot at 0x7f30147f84d0>
-
-
-
-
     
 ![png](/_posts/houseprice/output_8_1.png)
     
