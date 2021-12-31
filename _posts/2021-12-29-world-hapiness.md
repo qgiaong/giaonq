@@ -1,7 +1,7 @@
 ---
 excerpt: Which factors contribute to the hapiness of a nation?
 author_profile: true
-title:  "World Hapiness"
+title:  "World Hapiness State"
 categories:
   - data science
 tags:
