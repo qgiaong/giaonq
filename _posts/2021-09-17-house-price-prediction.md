@@ -612,7 +612,7 @@ sns.heatmap(corrmat, vmax=.8, square=True)
 
 
     
-![png](/_posts/houseprice/output_8_1.png)
+![png](/assets/images/houseprice/output_8_1.png)
     
 
 
@@ -638,7 +638,7 @@ sns.heatmap(cm, cbar=True, annot=True, square=True, fmt='.2f', annot_kws={'size'
 
 
     
-![png](/_posts/houseprice/output_10_1.png)
+![png](/assets/images/houseprice/output_10_1.png)
     
 
 
@@ -667,7 +667,7 @@ plt.show();
 
 
     
-![png](/_posts/houseprice/output_12_1.png)
+![png](/assets/images/houseprice/output_12_1.png)
     
 
 
@@ -846,7 +846,7 @@ sns.despine(trim=True, left=True)
 
 
     
-![png](/_posts/houseprice/output_18_0.png)
+![png](/assets/images/houseprice/output_18_0.png)
     
 
 
@@ -880,7 +880,7 @@ sns.despine(trim=True, left=True)
 
 
     
-![png](/_posts/houseprice/output_23_0.png)
+![png](/assets/images/houseprice/output_23_0.png)
     
 
 
@@ -909,7 +909,7 @@ sns.despine(trim=True, left=True)
 
 
     
-![png](/_posts/houseprice/output_26_0.png)
+![png](/assets/images/houseprice/output_26_0.png)
     
 
 
@@ -975,7 +975,7 @@ sns.despine(trim=True, left=True)
 
 
     
-![png](/_posts/houseprice/output_30_0.png)
+![png](/assets/images/houseprice/output_30_0.png)
     
 
 
@@ -1729,7 +1729,7 @@ plt.show()
 
 
     
-![png](/_posts/houseprice/output_52_1.png)
+![png](/assets/images/houseprice/output_52_1.png)
     
 
 
