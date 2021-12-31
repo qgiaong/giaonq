@@ -187,32 +187,6 @@ df.head()
       fill: #FFFFFF;
     }
   </style>
-
-      <script>
-        const buttonEl =
-          document.querySelector('#df-b69bd819-6ff1-4137-a2bf-8e0076508f0d button.colab-df-convert');
-        buttonEl.style.display =
-          google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-        async function convertToInteractive(key) {
-          const element = document.querySelector('#df-b69bd819-6ff1-4137-a2bf-8e0076508f0d');
-          const dataTable =
-            await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                     [key], {});
-          if (!dataTable) return;
-
-          const docLinkHtml = 'Like what you see? Visit the ' +
-            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-            + ' to learn more about interactive tables.';
-          element.innerHTML = '';
-          dataTable['/_posts/happiness/output_type'] = 'display_data';
-          await google.colab.output.renderOutput(dataTable, element);
-          const docLink = document.createElement('div');
-          docLink.innerHTML = docLinkHtml;
-          element.appendChild(docLink);
-        }
-      </script>
-    </div>
   </div>
 
 
@@ -425,32 +399,6 @@ df2021.head()
       fill: #FFFFFF;
     }
   </style>
-
-      <script>
-        const buttonEl =
-          document.querySelector('#df-5e4bdedd-ee16-4ad1-91d2-2454f58be93e button.colab-df-convert');
-        buttonEl.style.display =
-          google.colab.kernel.accessAllowed ? 'block' : 'none';
-
-        async function convertToInteractive(key) {
-          const element = document.querySelector('#df-5e4bdedd-ee16-4ad1-91d2-2454f58be93e');
-          const dataTable =
-            await google.colab.kernel.invokeFunction('convertToInteractive',
-                                                     [key], {});
-          if (!dataTable) return;
-
-          const docLinkHtml = 'Like what you see? Visit the ' +
-            '<a target="_blank" href=https://colab.research.google.com/notebooks/data_table.ipynb>data table notebook</a>'
-            + ' to learn more about interactive tables.';
-          element.innerHTML = '';
-          dataTable['/_posts/happiness/output_type'] = 'display_data';
-          await google.colab.output.renderOutput(dataTable, element);
-          const docLink = document.createElement('div');
-          docLink.innerHTML = docLinkHtml;
-          element.appendChild(docLink);
-        }
-      </script>
-    </div>
   </div>
 
 
@@ -563,13 +511,6 @@ continuous = ['Logged GDP per capita',
 ```python
 sns.pairplot(df2021, vars = continuous,  hue = 'Ladder score')
 ```
-
-
-
-
-    <seaborn.axisgrid.PairGrid at 0x7fd1f7d89650>
-
-
 
 
     
@@ -897,30 +838,6 @@ df_.shape
 
 
     (149, 10)
-
-
-
-
-```python
-df_
-```
-
-
-
-
-    array([[ 2.15746188, -1.22001997,  2.14695861, ...,  1.39355041,
-            -0.55188553, -3.03122783],
-           [ 1.95004606, -1.08320389,  1.94044646, ...,  1.36699018,
-             0.30059368, -3.07041632],
-           [ 1.90426509, -1.03759852,  1.89857303, ...,  1.12794812,
-             0.26729371, -2.43780212],
-           ...,
-           [-1.97870855,  0.42177309, -1.99851103, ...,  0.93317312,
-             0.50705349, -3.13759659],
-           [-2.23097103, -0.03428054, -2.27354334, ..., -1.01457695,
-            -0.21222584,  0.52372806],
-           [-2.81210905, -0.9463878 , -2.90449981, ..., -3.62633272,
-            -0.5785255 ,  1.1003587 ]])
 
 
 
