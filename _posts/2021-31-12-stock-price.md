@@ -7,7 +7,7 @@ categories:
 tags:
   - web api
 header:
-  overlay_image: /assets/images/stock.jpg
-  teaser: /assets/images/stock.jpg
+  overlay_image: /assets/images/covid.jpg
+  teaser: /assets/images/covid.jpg
   overlay_filter: 0.5
 ---
