@@ -36,12 +36,251 @@ import seaborn as sns
 df = pd.read_csv("world-happiness-report.csv")
 df.head()
 ```
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country name</th>
+      <th>year</th>
+      <th>Life Ladder</th>
+      <th>Log GDP per capita</th>
+      <th>Social support</th>
+      <th>Healthy life expectancy at birth</th>
+      <th>Freedom to make life choices</th>
+      <th>Generosity</th>
+      <th>Perceptions of corruption</th>
+      <th>Positive affect</th>
+      <th>Negative affect</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Afghanistan</td>
+      <td>2008</td>
+      <td>3.724</td>
+      <td>7.370</td>
+      <td>0.451</td>
+      <td>50.80</td>
+      <td>0.718</td>
+      <td>0.168</td>
+      <td>0.882</td>
+      <td>0.518</td>
+      <td>0.258</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Afghanistan</td>
+      <td>2009</td>
+      <td>4.402</td>
+      <td>7.540</td>
+      <td>0.552</td>
+      <td>51.20</td>
+      <td>0.679</td>
+      <td>0.190</td>
+      <td>0.850</td>
+      <td>0.584</td>
+      <td>0.237</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Afghanistan</td>
+      <td>2010</td>
+      <td>4.758</td>
+      <td>7.647</td>
+      <td>0.539</td>
+      <td>51.60</td>
+      <td>0.600</td>
+      <td>0.121</td>
+      <td>0.707</td>
+      <td>0.618</td>
+      <td>0.275</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Afghanistan</td>
+      <td>2011</td>
+      <td>3.832</td>
+      <td>7.620</td>
+      <td>0.521</td>
+      <td>51.92</td>
+      <td>0.496</td>
+      <td>0.162</td>
+      <td>0.731</td>
+      <td>0.611</td>
+      <td>0.267</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Afghanistan</td>
+      <td>2012</td>
+      <td>3.783</td>
+      <td>7.705</td>
+      <td>0.521</td>
+      <td>52.24</td>
+      <td>0.531</td>
+      <td>0.236</td>
+      <td>0.776</td>
+      <td>0.710</td>
+      <td>0.268</td>
+    </tr>
+  </tbody>
+</table>
+</div>
+
 
 ```python
 df2021 = pd.read_csv("world-happiness-report-2021.csv")
 df2021.head()
 ```
 
+<div>
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th></th>
+      <th>Country name</th>
+      <th>Regional indicator</th>
+      <th>Ladder score</th>
+      <th>Standard error of ladder score</th>
+      <th>upperwhisker</th>
+      <th>lowerwhisker</th>
+      <th>Logged GDP per capita</th>
+      <th>Social support</th>
+      <th>Healthy life expectancy</th>
+      <th>Freedom to make life choices</th>
+      <th>Generosity</th>
+      <th>Perceptions of corruption</th>
+      <th>Ladder score in Dystopia</th>
+      <th>Explained by: Log GDP per capita</th>
+      <th>Explained by: Social support</th>
+      <th>Explained by: Healthy life expectancy</th>
+      <th>Explained by: Freedom to make life choices</th>
+      <th>Explained by: Generosity</th>
+      <th>Explained by: Perceptions of corruption</th>
+      <th>Dystopia + residual</th>
+    </tr>
+  </thead>
+  <tbody>
+    <tr>
+      <th>0</th>
+      <td>Finland</td>
+      <td>Western Europe</td>
+      <td>7.842</td>
+      <td>0.032</td>
+      <td>7.904</td>
+      <td>7.780</td>
+      <td>10.775</td>
+      <td>0.954</td>
+      <td>72.0</td>
+      <td>0.949</td>
+      <td>-0.098</td>
+      <td>0.186</td>
+      <td>2.43</td>
+      <td>1.446</td>
+      <td>1.106</td>
+      <td>0.741</td>
+      <td>0.691</td>
+      <td>0.124</td>
+      <td>0.481</td>
+      <td>3.253</td>
+    </tr>
+    <tr>
+      <th>1</th>
+      <td>Denmark</td>
+      <td>Western Europe</td>
+      <td>7.620</td>
+      <td>0.035</td>
+      <td>7.687</td>
+      <td>7.552</td>
+      <td>10.933</td>
+      <td>0.954</td>
+      <td>72.7</td>
+      <td>0.946</td>
+      <td>0.030</td>
+      <td>0.179</td>
+      <td>2.43</td>
+      <td>1.502</td>
+      <td>1.108</td>
+      <td>0.763</td>
+      <td>0.686</td>
+      <td>0.208</td>
+      <td>0.485</td>
+      <td>2.868</td>
+    </tr>
+    <tr>
+      <th>2</th>
+      <td>Switzerland</td>
+      <td>Western Europe</td>
+      <td>7.571</td>
+      <td>0.036</td>
+      <td>7.643</td>
+      <td>7.500</td>
+      <td>11.117</td>
+      <td>0.942</td>
+      <td>74.4</td>
+      <td>0.919</td>
+      <td>0.025</td>
+      <td>0.292</td>
+      <td>2.43</td>
+      <td>1.566</td>
+      <td>1.079</td>
+      <td>0.816</td>
+      <td>0.653</td>
+      <td>0.204</td>
+      <td>0.413</td>
+      <td>2.839</td>
+    </tr>
+    <tr>
+      <th>3</th>
+      <td>Iceland</td>
+      <td>Western Europe</td>
+      <td>7.554</td>
+      <td>0.059</td>
+      <td>7.670</td>
+      <td>7.438</td>
+      <td>10.878</td>
+      <td>0.983</td>
+      <td>73.0</td>
+      <td>0.955</td>
+      <td>0.160</td>
+      <td>0.673</td>
+      <td>2.43</td>
+      <td>1.482</td>
+      <td>1.172</td>
+      <td>0.772</td>
+      <td>0.698</td>
+      <td>0.293</td>
+      <td>0.170</td>
+      <td>2.967</td>
+    </tr>
+    <tr>
+      <th>4</th>
+      <td>Netherlands</td>
+      <td>Western Europe</td>
+      <td>7.464</td>
+      <td>0.027</td>
+      <td>7.518</td>
+      <td>7.410</td>
+      <td>10.932</td>
+      <td>0.942</td>
+      <td>72.4</td>
+      <td>0.913</td>
+      <td>0.175</td>
+      <td>0.338</td>
+      <td>2.43</td>
+      <td>1.501</td>
+      <td>1.079</td>
+      <td>0.753</td>
+      <td>0.647</td>
+      <td>0.302</td>
+      <td>0.384</td>
+      <td>2.798</td>
+    </tr>
+  </tbody>
+</table>
+</div>
 
 ```python
 df.rename(columns={'Country name': 'Country'}, inplace=True)
