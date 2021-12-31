@@ -154,4 +154,43 @@ import os
 # Import WebClient from Python SDK (github.com/slackapi/python-slack-sdk)
 from slack_sdk import WebClient
 from slack_sdk.errors import SlackApiError
+```
 ```python
+def send_message(msg, channel="money"):
+  client = WebClient(token=SLACK_BOT_TOKEN)
+  logger = logging.getLogger(__name__)
+  try:
+    # Call the conversations.list method using the WebClient
+    result = client.chat_postMessage(
+        channel=channel,
+        text=msg,  # You could also use a blocks[] array to send richer content
+        username='Cute Bot',
+        icon_emoji=':robot_face:'
+    )
+    logger.info(result)
+  except SlackApiError as e:
+      print(f"Error: {e}")
+```
+```python
+def send_file(file_name, init_cmt = "Here's my file :smile:",  channel="money"):
+  client = WebClient(token=SLACK_BOT_TOKEN)
+  logger = logging.getLogger(__name__)
+  try:
+    # Call the conversations.list method using the WebClient
+    result = client.files_upload(
+        channels=channel,
+        initial_comment=init_cmt,
+        file=file_name,
+        username='Cute Bot',
+        icon_emoji=':robot_face:'
+    )
+    # Log the result
+    logger.info(result)
+  except SlackApiError as e:
+      print(f"Error: {e}")
+```
+We can try sending something to our channel:
+```python
+send_message("hello")
+send_file("sma_close.webp")
+```
