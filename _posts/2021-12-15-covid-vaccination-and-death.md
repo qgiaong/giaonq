@@ -811,7 +811,7 @@ plt.xlabel('Countries')
 
 
     
-![png](/_posts/covid/output_13_1.png)
+![png](/assets/images/covid/output_13_1.png)
     
 
 
@@ -1119,7 +1119,7 @@ ax.set_ylabel("Country")
 
 
     
-![png](/_posts/covid/output_17_1.png)
+![png](/assets/images/covid/output_17_1.png)
     
 
 
@@ -1672,7 +1672,7 @@ plt.show()
 
 
     
-![png](/_posts/covid/output_34_0.png)
+![png](/assets/images/covid/output_34_0.png)
     
 
 
@@ -1687,7 +1687,7 @@ plt.show()
 
 
     
-![png](/_posts/covid/output_35_0.png)
+![png](/assets/images/covid/output_35_0.png)
     
 
 
@@ -1703,7 +1703,7 @@ plt.show()
 
 
     
-![png](/_posts/covid/output_36_0.png)
+![png](/assets/images/covid/output_36_0.png)
     
 
 
@@ -1733,7 +1733,7 @@ plt.show()
 
 
     
-![png](/_posts/covid/output_39_0.png)
+![png](/assets/images/covid/output_39_0.png)
     
 
 
@@ -1753,7 +1753,7 @@ sns.pairplot(df, vars = ['total_deaths', 'covid_deaths', 'non_covid_deaths'], hu
 
 
     
-![png](/_posts/covid/output_40_1.png)
+![png](/assets/images/covid/output_40_1.png)
     
 
 
@@ -1940,7 +1940,7 @@ plt.show()
 
 
     
-![png](/_posts/covid/output_45_1.png)
+![png](/assets/images/covid/output_45_1.png)
     
 
 
