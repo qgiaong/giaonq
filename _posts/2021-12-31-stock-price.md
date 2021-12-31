@@ -138,9 +138,9 @@ fig1 = px.line(df_sma, x = 'date', y = 'value', color = 'variable')
 # Show plot
 fig1.show()
 ```
-```
+
 {% include_relative stocks/sma_close.html %}
-```
+
 The resulting plot can be saved as interactive (.html) or static (e.g. .png) images:
 ```python
 fig1.write_image("sma_close.webp")
