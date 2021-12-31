@@ -259,23 +259,9 @@ sns.countplot(train_labels)
 plt.title('Labels distribution')
 ```
 
-    /usr/local/lib/python3.7/dist-packages/seaborn/_decorators.py:43: FutureWarning: Pass the following variable as a keyword arg: x. From version 0.12, the only valid positional argument will be `data`, and passing other arguments without an explicit keyword will result in an error or misinterpretation.
-      FutureWarning
-    
-
-
-
-
-    Text(0.5, 1.0, 'Labels distribution')
-
-
-
-
     
 ![png](/_posts/imgs/output_30_2.png)
     
-
-
 We are going to set aside a small part of the training set for validation.
 
 
@@ -481,7 +467,3 @@ for review in reviews:
 
 We got an accuracy score of 91%, which is pretty good. Training was easy, but the most challenging task is the data preprocessing. 
 
-
-```python
-
-```
