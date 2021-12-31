@@ -260,7 +260,7 @@ plt.title('Labels distribution')
 ```
 
     
-![png](/_posts/imgs/output_30_2.png)
+![png](/assets/images/imgs/output_30_2.png)
     
 We are going to set aside a small part of the training set for validation.
 
