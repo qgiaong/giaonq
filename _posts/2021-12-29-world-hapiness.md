@@ -47,19 +47,7 @@ df.head()
   <div id="df-b69bd819-6ff1-4137-a2bf-8e0076508f0d">
     <div class="colab-df-container">
       <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -243,19 +231,7 @@ df2021.head()
   <div id="df-5e4bdedd-ee16-4ad1-91d2-2454f58be93e">
     <div class="colab-df-container">
       <div>
-<style scoped>
-    .dataframe tbody tr th:only-of-type {
-        vertical-align: middle;
-    }
 
-    .dataframe tbody tr th {
-        vertical-align: top;
-    }
-
-    .dataframe thead th {
-        text-align: right;
-    }
-</style>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
