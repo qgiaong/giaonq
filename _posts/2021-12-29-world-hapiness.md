@@ -16,7 +16,6 @@ header:
 
 
 
-
 Which factors contribute to the hapiness of a nation? 2022 is coming, let us look back the global hapiness over time!
 
 
@@ -39,14 +38,6 @@ import seaborn as sns
 df = pd.read_csv("world-happiness-report.csv")
 df.head()
 ```
-
-
-
-
-
-  <div id="df-b69bd819-6ff1-4137-a2bf-8e0076508f0d">
-    <div class="colab-df-container">
-      <div>
 
 <table border="1" class="dataframe">
   <thead>
@@ -138,11 +129,7 @@ df.head()
     </tr>
   </tbody>
 </table>
-</div>
 
-
-  
-  </div>
 
 
 
@@ -157,9 +144,6 @@ df2021.head()
 
 
 
-  <div id="df-5e4bdedd-ee16-4ad1-91d2-2454f58be93e">
-    <div class="colab-df-container">
-      <div>
 
 <table border="1" class="dataframe">
   <thead>
@@ -305,12 +289,6 @@ df2021.head()
     </tr>
   </tbody>
 </table>
-</div>
-     
-  </div>
-
-
-
 
 
 ```python
