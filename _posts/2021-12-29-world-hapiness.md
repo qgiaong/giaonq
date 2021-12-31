@@ -328,7 +328,7 @@ for s in ['left','right','top','bottom']:
     ax2.spines[s].set_visible(False)
 ```
    
-![png](/_posts/happiness/output_9_0.png)
+![png](/assets/images/happiness/output_9_0.png)
     
 
 
@@ -347,7 +347,7 @@ for s in ['left','right','top','bottom']:
 
 
     
-![png](/_posts/happiness/output_11_0.png)
+![png](/assets/images/happiness/output_11_0.png)
     
 
 
@@ -366,7 +366,7 @@ plt.show()
 
 
     
-![png](/_posts/happiness/output_13_0.png)
+![png](/assets/images/happiness/output_13_0.png)
     
 
 
@@ -388,7 +388,7 @@ sns.pairplot(df2021, vars = continuous,  hue = 'Ladder score')
 
 
     
-![png](/_posts/happiness/output_15_1.png)
+![png](/assets/images/happiness/output_15_1.png)
     
 
 
@@ -400,7 +400,7 @@ plt.show()
 
 
     
-![png](/_posts/happiness/output_16_0.png)
+![png](/assets/images/happiness/output_16_0.png)
     
 
 
@@ -448,7 +448,7 @@ plt.show()
 
 
     
-![png](/_posts/happiness/output_20_0.png)
+![png](/assets/images/happiness/output_20_0.png)
     
 
 
@@ -506,7 +506,7 @@ plt.show()
 
 
     
-![png](/_posts/happiness/output_22_1.png)
+![png](/assets/images/happiness/output_22_1.png)
     
 
 
@@ -568,7 +568,7 @@ plt.show()
 
 
     
-![png](/_posts/happiness/output_24_1.png)
+![png](/assets/images/happiness/output_24_1.png)
     
 
 
@@ -630,7 +630,7 @@ plt.show()
 
 
     
-![png](/_posts/happiness/output_26_0.png)
+![png](/assets/images/happiness/output_26_0.png)
     
 
 
@@ -672,7 +672,7 @@ plt.show()
 
 
     
-![png](/_posts/happiness/output_32_0.png)
+![png](/assets/images/happiness/output_32_0.png)
     
 
 
@@ -824,7 +824,7 @@ plt.show()
 
 
     
-![png](/_posts/happiness/output_52_0.png)
+![png](/assets/images/happiness/output_52_0.png)
     
 
 
