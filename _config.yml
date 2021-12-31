@@ -103,7 +103,7 @@ analytics:
 # Site Author
 author:
   name             : "Giao Nguyen-Quynh"
-  avatar           : "/assets/images/avatar.png" # path of avatar image, e.g. 
+  avatar           : "/assets/images/avatar.gif" # path of avatar image, e.g. 
   bio              : "Lifelong learner"
   location         : "Germany"
   email            :
