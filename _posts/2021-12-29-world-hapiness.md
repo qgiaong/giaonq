@@ -14,8 +14,6 @@ header:
   overlay_filter: 0.5
 ---
 
-
-
 Which factors contribute to the hapiness of a nation? 2022 is coming, let us look back the global hapiness over time!
 
 
@@ -38,7 +36,7 @@ import seaborn as sns
 df = pd.read_csv("world-happiness-report.csv")
 df.head()
 ```
-
+<div>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -129,10 +127,7 @@ df.head()
     </tr>
   </tbody>
 </table>
-
-
-
-
+</div>
 
 
 ```python
@@ -140,11 +135,7 @@ df2021 = pd.read_csv("world-happiness-report-2021.csv")
 df2021.head()
 ```
 
-
-
-
-
-
+<div>
 <table border="1" class="dataframe">
   <thead>
     <tr style="text-align: right;">
@@ -289,7 +280,7 @@ df2021.head()
     </tr>
   </tbody>
 </table>
-
+</div>
 
 ```python
 df.rename(columns={'Country name': 'Country'}, inplace=True)
@@ -305,7 +296,6 @@ c1 = "mediumturquoise"
 c2 = "lightpink"
 c3 = "sandybrown"
 ```
-
 
 ```python
 high_c = c1
@@ -337,9 +327,7 @@ for s in ['left','right','top','bottom']:
     ax1.spines[s].set_visible(False)
     ax2.spines[s].set_visible(False)
 ```
-
-
-    
+   
 ![png](/_posts/happiness/output_9_0.png)
     
 
