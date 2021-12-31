@@ -1,0 +1,148 @@
+---
+excerpt: predict the house price given other indicators
+author_profile: true
+title:  "Create a Stack Bot for Stock Indexes Notification"
+categories:
+  - coding
+tags:
+  - web api
+header:
+  overlay_image: /assets/images/stock.jpg
+  teaser: /assets/images/stock.jpg
+  overlay_filter: 0.5
+---
+In this post, we are going to use the [Alpha Vantage API](https://www.alphavantage.co/) and the [Slack API](https://api.slack.com/) to create a Slack bot to notify us if the stock indicators meet some conditions of interests.
+First of all, you need to sign up for the 2 APIs and get your private key for each.
+```python
+import requests
+import json
+import plotly as px
+
+import csv
+import requests
+import matplotlib.pyplot as plt
+import pandas as pd
+
+import matplotlib.pyplot as plt
+
+import plotly.express as px
+import plotly.graph_objects as go
+
+import os
+import time
+import re
+from slackclient import SlackClient
+
+import numpy as np
+import argparse
+```
+
+# Get stock information from Alpha Vantage
+Assume that we are interested in the following stock indexes: price, SMA, STOCH and MACDEXT. Next, we would like to get information about the "NVDA" stock.
+The following functions define API calls to get such information:
+```python
+key = "YOUR_API_KEY"
+def getPrice(symbol="NVDA"):
+    CSV_URL = base_url  + "query?function=TIME_SERIES_DAILY&symbol=" + symbol
+    CSV_URL += "&apikey=" + key
+    
+    with requests.Session() as s:
+        res = s.get(CSV_URL).json()
+    return res
+```
+```python
+def getSMA(symbol="NVDA", interval="daily", slice="year1month1", time_period="14",series_type="open"):
+    CSV_URL = base_url  + "query?function=SMA&symbol=" + symbol
+    CSV_URL += "&interval=" + interval + "&time_period=" + time_period
+    CSV_URL += "&series_type=" + series_type + "&apikey=" + key
+    
+    with requests.Session() as s:
+        res = s.get(CSV_URL).json() 
+    return res
+ ```
+ 
+ ```python
+def getSTOCH(symbol="NVDA", interval="daily"):
+  CSV_URL = base_url  + "query?function=STOCH&symbol=" + symbol
+  CSV_URL += "&interval=" + interval + "&apikey=" + key
+    
+  with requests.Session() as s:
+      res = s.get(CSV_URL).json()
+  return res
+```
+```python
+def getMACDEXT():
+    CSV_URL = base_url  + "query?function=MACDEXT&symbol=" + "STM.DEX"
+    CSV_URL += "&interval=" + "daily" +"&series_type="+"open"+"&apikey=" + key
+    
+    with requests.Session() as s:
+        res = s.get(CSV_URL).json()
+ 
+    return res
+```
+```python
+price_list = getPrice()
+sna_list = getSMA()
+stoch_list = getSTOCH()
+macd_list = getMACDEXT()
+```
+We can transform the raw data to Pandas dataframes for processing:
+```python
+prices_df = pd.DataFrame(price_list["Time Series (Daily)"]).transpose()[:n_days]
+sma_df = pd.DataFrame(sna_list['Technical Analysis: SMA']).transpose()[:n_days]
+stoch_df = pd.DataFrame(stoch_list['Technical Analysis: STOCH']).transpose()[:n_days]
+macd_df = pd.DataFrame(macd_list['Technical Analysis: MACDEXT']).transpose()[:n_days]
+```
+
+We can also create a joint dataframe:
+```python
+join_df = prices_df.join(sma_df).join(stoch_df).join(macd_df)
+join_df = join_df.rename_axis('date').reset_index()
+
+join_df = join_df.rename(columns={'1. open': 'open', '2. high': 'high', '3. low': 'low','4. close': 'close','5. volume': 'volume'})
+
+columns = ["open", "high","low","close","volume","SMA", "SlowK","SlowD", "MACD_Hist", "MACD", "MACD_Signal"]
+for c in columns:
+  join_df[c] = pd.to_numeric(join_df[c], downcast="float")
+join_df.head()
+```
+```python
+join_df.info()
+```
+    <class 'pandas.core.frame.DataFrame'>
+    RangeIndex: 100 entries, 0 to 99
+    Data columns (total 12 columns):
+     #   Column       Non-Null Count  Dtype  
+    ---  ------       --------------  -----  
+     0   date         100 non-null    object 
+     1   open         100 non-null    float32
+     2   high         100 non-null    float32
+     3   low          100 non-null    float32
+     4   close        100 non-null    float32
+     5   volume       100 non-null    float32
+     6   SMA          99 non-null     float32
+     7   SlowD        99 non-null     float32
+     8   SlowK        99 non-null     float32
+     9   MACD         98 non-null     float32
+     10  MACD_Hist    98 non-null     float32
+     11  MACD_Signal  98 non-null     float32
+    dtypes: float32(11), object(1)
+    memory usage: 5.2+ KB
+    
+ Plotly provides a convenient way to plot time series data:
+```python
+df_sma = pd.melt(join_df, id_vars = ['date'], value_vars = ['SMA', 'close'])
+xi = x for (x, y) in intersections]
+yi = [y for (x, y) in intersections]
+fig1 = px.line(df_sma, x = 'date', y = 'value', color = 'variable')
+# Show plot
+fig1.show()
+```
+{% include /assets/images/stocks/macd.html %}
+The resulting plot can be saved as interactive (.html) or static (e.g. .png) images:
+```python
+fig1.write_image("sma_close.webp")
+fig1.write_html("sma_close.html")
+```
+ 
+ 
