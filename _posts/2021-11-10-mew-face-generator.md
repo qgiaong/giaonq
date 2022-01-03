@@ -109,11 +109,17 @@ test_dataset = (tf.data.Dataset.from_tensor_slices(test_images).batch(batch_size
 ```
 
 # Define models
-An autoen
+A traditional autoencoder, which has its origin back to the 1980s is
+an unsupervised learning technique that attempts to find a good compressed representation
+of the observations. This technique is deterministic and is trained to reconstruct the input as closely as possible. It works by mapping the observed, potentially high-dimensional data to an unobserved low-dimensional latent space and attempt to reconstruct the observation from the compressed representation. An autoencoder has an hourglass structure to force a useful and
+compact representation of the observation. Two main components of an autoencoder are its encoder and its decoder. Both components are neural networks. Therefore, they can model arbitrary nonlinear relationship between the involved variables. The task of the encoder is to compress the high-dimensional observations to a potentially lower-dimensional space. The decoder decodes compressed information back into the observation space. The bottleneck architecture avoids that the network learns an identity function. At the same time, it constructs a more condensed latent space.
 
-![img](https://en.wikipedia.org/wiki/File:Reparameterized_Variational_Autoencoder.png)
+Variational Autoencoders resemble the structure of autoencoders In general, the VAEs employ two deep neural networks: the generative network, which corresponds to the decoder, maps the latent representation to the observed data; and the inference network, or the encoder, which approximates the posterior that maps the latent space to the observation space. The central objective of VAEs is to find an explicit distribution that can explain the data generation process, instead of learning a deterministic mapping of the data sample to the latent state vector. A VAE is trained to maximize the lower bound on the observations. Please refer to the [original paper](https://arxiv.org/abs/1312.6114) for more theory detail. 
+
+![img](https://upload.wikimedia.org/wikipedia/commons/1/11/Reparameterized_Variational_Autoencoder.png)
 *Image from Wikipedia*
 
+Since the training data are images, we will use convoluional neural networks for the encoder and decoder.
 
 ```python
 class CVAE(tf.keras.Model):
@@ -147,17 +153,19 @@ class CVAE(tf.keras.Model):
             tf.keras.layers.Conv2DTranspose(
                 filters=3, kernel_size=3, strides=1, padding='same')])
 
+  # sample a single cat image. This is done by choosing a sample from the latent space and
+  # project it to the observation space 
   @tf.function
   def sample(self, eps=None):
     if eps is None:
       eps = tf.random.normal(shape=(100, self.latent_dim))
     return self.decode(eps, apply_sigmoid=True)
-
+  # map to the latent space
   def encode(self, x):
     encoded = self.encoder(x)
     mean, logvar = tf.split(encoded, num_or_size_splits=2, axis=1)
     return mean, logvar
-
+  # ensure gradient flow properly
   def reparameterize(self, mean, logvar):
     eps = tf.random.normal(shape=mean.shape)
     return eps * tf.exp(logvar * .5) + mean
@@ -170,18 +178,9 @@ class CVAE(tf.keras.Model):
     return logits
 ```
 
+The following code block defines functions to compute the loss:
 
 ```python
-optimizer = tf.keras.optimizers.Adam(1e-3)
-
-
-def log_normal_pdf(sample, mean, logvar, raxis=1):
-  log2pi = tf.math.log(2. * np.pi)
-  return tf.reduce_sum(
-      -.5 * ((sample - mean) ** 2. * tf.exp(-logvar) + logvar + log2pi),
-      axis=raxis)
-
-
 def compute_loss(model, x):
   mean, logvar = model.encode(x)
 
@@ -194,6 +193,18 @@ def compute_loss(model, x):
   logpz = log_normal_pdf(z, 0., 0.)
   logqz_x = log_normal_pdf(z, mean, logvar)
   return -tf.reduce_mean(logpx_z + logpz - logqz_x)
+```
+Then we define the training loop:
+
+```python
+optimizer = tf.keras.optimizers.Adam(1e-3)
+
+
+def log_normal_pdf(sample, mean, logvar, raxis=1):
+  log2pi = tf.math.log(2. * np.pi)
+  return tf.reduce_sum(
+      -.5 * ((sample - mean) ** 2. * tf.exp(-logvar) + logvar + log2pi),
+      axis=raxis)
 
 
 @tf.function
@@ -210,12 +221,12 @@ def train_step(model, x, optimizer):
   return -loss
 ```
 
-
+Helper function to save intermediate training examples:
 ```python
 def generate_and_save_images(model, epoch, test_sample):
   mean, logvar = model.encode(test_sample)
   z = model.reparameterize(mean, logvar)
-# print(z)
+
   predictions = model.sample(z)
   fig = plt.figure(figsize=(4, 4))
 
@@ -228,7 +239,7 @@ def generate_and_save_images(model, epoch, test_sample):
   plt.savefig('image_at_epoch_{:04d}.png'.format(epoch))
   plt.show()
 ```
-
+Train the model:
 
 ```python
 epochs = 38
@@ -244,8 +255,6 @@ for test_batch in test_dataset.take(1):
 
 
 ```python
-# keeping the random vector constant for generation (prediction) so
-# it will be easier to see the improvement.
 random_vector_for_generation = tf.random.normal(
     shape=[num_examples_to_generate, latent_dim])
 model = CVAE(latent_dim)
@@ -293,7 +302,7 @@ for epoch in range(cur_epoch, epochs + 1):
     
 
 
-
+Plot the Evidence Lower Bound over time (negative loss):
    
 
 
@@ -355,8 +364,10 @@ plt.imshow(display_image(epochs))
 plt.axis('off')  # Display images
 ```
 
-# Test generation
-
+# Model Evaluation
+To evaluate the model performance, we check its ability on 2 tasks: generation of new image and reconstruction of real images from the latent encoding:
+## Test Generation
+We sample several images by drawing samples from the latent space and map them onto the images space:
 
 ```python
 n_rowcol = 6
@@ -374,12 +385,10 @@ for i in range(predictions.shape[0]):
 plt.savefig('image_at_epoch_{:04d}.png'.format(epoch))
 plt.show()
 ```
-
-
     
 ![png](/assets/images/mew/output_23_0.png)
     
-
+In general, the model has learned the characteristics of a cat face, including the shape, positions of the eyes, nose and plausible feather color.
 
 # Test Reconstruction
 
@@ -392,7 +401,7 @@ z = model.reparameterize(mean, logvar)
 
 x_logit = model.sample(z)
 
-# print some images
+# reconstructed images
 fig = plt.figure(figsize=(16,10))
 n_rows = 3
 n_cols = 5
@@ -409,6 +418,7 @@ for i in range(15):
 
 
 ```python
+# real images
 fig = plt.figure(figsize=(16,10))
 n_rows = 3
 n_cols = 5
@@ -421,9 +431,4 @@ for i in range(15):
     
 ![png](/assets/images/mew/output_26_0.png)
     
-
-
-
-```python
-
-```
+The reconstructed images seem a little blurry, which might lie on our choice of latent space dimension. However, the most important characteristics of the face can be captured.
