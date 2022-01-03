@@ -1,7 +1,7 @@
 ---
 excerpt: use deep learning to detect Covid infection on X-ray images
 author_profile: true
-title:  "Detect Covid Infection on X-ray images"
+title:  "Detect Covid Infection on X-ray Images with Transfer Learning"
 categories:
   - data science
 tags:
@@ -13,9 +13,13 @@ header:
   teaser: /assets/images/lung.jpg
   overlay_filter: 0.5
 ---
-<a href="https://colab.research.google.com/github/qgiaong/blogs/blob/main/CovidDetection_TF.ipynb" target="_parent"><img src="https://colab.research.google.com/assets/colab-badge.svg" alt="Open In Colab"/></a>
+At this time, people all over the world are fighting with the Covid-19 pandemic, which has been causing a global public health emergency. Due to the new variations, the number of infected people is increasing everyday, which puts tremendous pressure on the healthcare system. An automated system to detect visual indicators of Covid-19 is therefore needed. In this blog post, we attempt to use deep learning to detect Covid infection on X-ray images. Note that this is only a showcase for the application of deep learning on real-world scenario, and the model presented here can no way replace medical professionals. Nevertheless, the model might be useful to classify and visualize segments of images that can be related to a Covid infection. 
+
+# Dataset and Dataloaders
+We are going to use the [Covid-19 Image Dataset](https://www.kaggle.com/pranavraikokte/covid19-image-dataset) for our task. The dataset contains labeled X-ray image data from 3 classes: Normal, Covid-19, and Viral Pneumonia (infection of your lungs caused by a virus. This causes inflammation in the tiny air sacs inside your lungs that make it hard to breathe).
 
 
+Let's first import the required packages
 ```python
 import os
 import random
@@ -35,7 +39,7 @@ from tensorflow.keras.optimizers import *
 from tensorflow.keras.applications import vgg16
 from tensorflow.keras.preprocessing.image import img_to_array, array_to_img, ImageDataGenerator
 ```
-
+We will crop the data to uniform size so that they can be processed parallelly as tensors
 
 ```python
 base_path = "/content/infection_imgs/Covid19-dataset"
@@ -44,26 +48,17 @@ WIDTH = 224
 BATCH_SIZE = 32
 SEED = 42
 ```
-
+Visualize a single image:
 
 ```python
 img = cv2.imread("/content/infection_imgs/Covid19-dataset/test/Covid/0100.jpeg")
 plt.imshow(img)
 ```
 
-
-
-
-    <matplotlib.image.AxesImage at 0x7f3c0a71cf50>
-
-
-
-
-    
 ![png](/assets/images/covid_xray/output_3_1.png)
     
 
-
+The next step is to define the Data Generators. We add some random augmentation steps to the training data to avoid overfitting and encourage the model to learn the relevant features:
 
 ```python
 train_generator = ImageDataGenerator(rescale=1/255,
@@ -74,7 +69,7 @@ train_generator = ImageDataGenerator(rescale=1/255,
                                 brightness_range=[0.2,1.2])
 test_generator = ImageDataGenerator(rescale=1/255)
 ```
-
+Then we collect the data from the folders:
 
 ```python
 train_generator = train_generator.flow_from_directory(
@@ -100,7 +95,9 @@ test_generator = test_generator.flow_from_directory(
     Found 66 images belonging to 3 classes.
     
 
+# Define the model
 
+We will not train the model from scratch, rather employ deep transfer learning techniques. To be precise, we employ the pretrained model VGG16 for our task, freezing the beginning blocks and only train the last two convolutional blocks for the features extraction. Besides, we add a [https://alexisbcook.github.io/2017/global-average-pooling-layers-for-object-localization/](https://alexisbcook.github.io/2017/global-average-pooling-layers-for-object-localization/), which is capable of extreme dimensionality reduction, to avoid overfitting.
 ```python
 vgg = vgg16.VGG16(weights='imagenet', include_top=False, input_shape = (HEIGHT,WIDTH, 3))
 
@@ -109,7 +106,7 @@ for layer in vgg.layers[:-8]:
     layer.trainable = False
 
 x = vgg.output
-# reduce size of preceding layer by taking average of each feature map
+# reduce size of previous layer by taking average of each feature map to avoid overfitting
 x = GlobalAveragePooling2D()(x) 
 x = Dense(3, activation="softmax")(x)
 
@@ -180,7 +177,7 @@ model.summary()
     Non-trainable params: 1,735,488
     _________________________________________________________________
     
-
+Now as we are all set, we can start training the model:
 
 ```python
 history = model.fit(train_generator, steps_per_epoch=train_generator.samples/train_generator.batch_size, epochs=20)
@@ -248,20 +245,8 @@ plt.legend(loc='lower right')
     
 ![png](/assets/images/covid_xray/output_10_1.png)
     
-
-
-
-```python
-test_images.shape
-```
-
-
-
-
-    (32, 224, 224, 3)
-
-
-
+# Model Evaluation
+We can evaluate the model performance on the test set:
 
 ```python
 test_loss_ = []
@@ -288,7 +273,7 @@ np.mean(test_loss_), np.mean(test_acc_)
     (0.25333257019519806, 0.9583333333333334)
 
 
-
+Our model achieved an accuracy of 96%, which might indicate a good model.
 
 ```python
 predicted = []
@@ -298,7 +283,7 @@ for X, y in test_generator:
   predicted.extend(np.argmax(model.predict(X),axis=1))
   break
 ```
-
+We can also use the `classification_report` method of `scikit-learn` to look at other evaluation metrics:
 
 ```python
 print(classification_report(real, predicted))
@@ -326,7 +311,9 @@ test_generator.class_indices
 
     {'Covid': 0, 'Normal': 1, 'Viral Pneumonia': 2}
 
+Another great feature of Global Average Pooling is that CNNs with GAP layers that have been trained for a classification task can also be used for object localization! It not only classifies the image, but also WHERE the evidences are located. Therefore, we can create a heat map representation for such models. This is don by a bilinear upsampling of the activation map to the training image size.
 
+The function below defines this visualization:
 
 
 ```python
@@ -370,13 +357,11 @@ for i in range(25):
     (32, 224, 224, 3)
     
 
-
     
 ![png](/assets/images/covid_xray/output_17_1.png)
-    
+
+Surprisingly, the model does a good job on detecting Covid infection: it highlights the ground-glass opacities in the images, which is a clear indicator for a Covid infection, see [here](https://www.news-medical.net/news/20201218/Transfer-learning-exploits-chest-Xray-to-diagnose-COVID-19-pneumonia.aspx).
 
 
-
-```python
-
-```
+# Conclusion
+We have trained a model for Covid 19 detection and visualization. The model achieved a precision of 96% and can learn the part of the images that are important for Covid detection. Note that the dataset employed here is quite small, so a larger and more curated dataset might help improve the model performance.
