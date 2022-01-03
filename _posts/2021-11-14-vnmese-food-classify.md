@@ -213,4 +213,5 @@ streamlit run app.py
 ![image](https://user-images.githubusercontent.com/43914109/147768429-3772d9b4-15e0-422e-b456-f1f3a5e749d9.png)
 
 Voila! You have created a simple web app for food classification with fastai and Streamlit! You can find the code for the project on my [Github](https://github.com/qgiaong/vnmesefood_classsificator)
+A demo of the app is available [here](https://share.streamlit.io/qgiaong/vnmesefood_classsificator/main/app.py)
 
