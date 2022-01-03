@@ -1,6 +1,8 @@
 ---
-permalink: /machine-learning/
 title: "Machine Learning Projects"
-type: pages
+layout: category
+permalink: /catgory/machine-learning/
+taxonomy: foo
+entries_layout: grid
 author_profile: true
 ---
