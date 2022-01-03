@@ -1,5 +1,5 @@
 ---
-excerpt: turn grayscale images to colorful masterpieces 
+excerpt: turn grayscale images into colorful masterpieces 
 author_profile: true
 title:  "Image Colorization"
 categories:
