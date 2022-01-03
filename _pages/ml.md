@@ -1,8 +1,7 @@
 ---
 title: "Machine Learning Projects"
-layout: category
+layout: pages
 permalink: /machine-learning/
-taxonomy: foo
-entries_layout: grid
+
 author_profile: true
 ---
