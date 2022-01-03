@@ -6,6 +6,7 @@ permalink: /machine-learning/
 author_profile: true
 ---
 Some selected machine learning projects
+
 {% include group-by-array.html collection=site.posts field='machine learning' %}
 
 <ul>
