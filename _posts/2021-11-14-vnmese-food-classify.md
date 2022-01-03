@@ -13,9 +13,16 @@ header:
   teaser: /assets/images/vnmesefood.jpg
   overlay_filter: 0.5
 ---
+Six years away from home, what I miss the most about Vietnam are the wonderful dishes. I miss the freshness, the flavorfulness, the perfect balance within each dish. The Vietnamese cuisine is characterised with using fresh ingredients (most households do the grocery shopping everyday!), harmony of texture and flavors, minimal use of oil, and a lot of fresh herbs. 
+
+In this post, we are going to employ the [fastai](https://www.fast.ai/) deep learning framework to train a classification model for Vietnamese dishes and serve the trained model as a web application with [Streamlit](https://streamlit.io/). For the classification task, we select a list of dishes we want to classify and download the images from the internet to create our custom dataset.  
+
+A demo of the app is available [here](https://share.streamlit.io/qgiaong/vnmesefood_classsificator/main/app.py).
 
 # Create and prepare the dataset
-We can create a custom dataset using the [Bing Image Downloader took](https://github.com/gurugaurav/bing_image_downloader). Note that the older version 1.0.4 yields much better result than the verion 1.1.1. Download the images for training is as simple as:
+One of the most important step for any classification task is to create a labeled dataset, i.e., each data point is assigned to a specific class. For many tasks, there are already curated, well-maintained datasets that one can use, but it is not always the case. Instead, we can create a custom labeled image dataset by collecting data from the internet.
+
+A simple way to search for training data is to use [Bing Image Downloader](https://github.com/gurugaurav/bing_image_downloader), which is a python package that helps download and search images from the Bing API. The package can be installed with `pip`. Note that the older version 1.0.4 yields much better result than the verion 1.1.1. Download the images for training is as simple as:
 
 
 ```python
@@ -24,14 +31,14 @@ from bing_image_downloader import downloader
 for q in food_list:
    downloader.download(q, limit=200, output_dir="foods", adult_filter_off=True, force_replace=False, timeout=5)
 ```
-where food_list contains the name of the food you want to classify. This will download the images in your local drive, with one folder for each name. Since the data are crawled from the web, we must make sure that the downloaded files are the actual images of the dished. Delete the wrong images if needed.
+where `food_list` contains the name of the food you want to classify. This will download the images in your local drive, with one folder for each name. Since the data are crawled from the web, we must make sure that the downloaded files are the actual images of the dished. Another postprocessing step is therefore needed. Check the downloaded images and delete the wrong ones if needed.
 
-I have already prepared a dataset for that. The zip file contains images of 20 Vietnamese dishes and can be downloaded from Google Drive:
+I have already prepared a dataset for our classification task. The zip file contains images of 20 Vietnamese dishes and can be downloaded from Google Drive:
 ```
 !gdown  --id 1L8flvsHZ3lPftDWaqclAvhIb_vW1NwXc
 ```
 
-In this post, we are going to use the fastai framework for training. First of all, let's import the needed modules:
+As mentioned earlier, we are going to use the fastai framework for training. First of all, let's import the needed modules:
 ```python
 from fastbook import *
 from fastai.vision.widgets import *
@@ -162,7 +169,7 @@ st.write("**Upload your Image**")
 uploaded_image = st.file_uploader("Upload your image in JPG or PNG format", type=["jpg", "png"])
 ```
 
-Next, we defome a function to display some related plots:
+Next, we define a function to display some related plots:
 ```python
 def plot_pred(img, learn_inf, k = 5):
     name,_, probs = learn_inf.predict(img)
@@ -200,7 +207,6 @@ Finally, we just have to call the trained model everytime a new image is uploade
 
 ```python
 if uploaded_image is not None:
-    # Close the demo
     choice = 'Select an Image'
     # Deploy the model with the uploaded image
     deploy(uploaded_image, uploaded=True, demo=False)
@@ -212,6 +218,8 @@ streamlit run app.py
 ```
 ![image](https://user-images.githubusercontent.com/43914109/147768429-3772d9b4-15e0-422e-b456-f1f3a5e749d9.png)
 
-Voila! You have created a simple web app for food classification with fastai and Streamlit! You can find the code for the project on my [Github](https://github.com/qgiaong/vnmesefood_classsificator)
-A demo of the app is available [here](https://share.streamlit.io/qgiaong/vnmesefood_classsificator/main/app.py)
+Voila! You have created a simple web app for food classification with fastai and Streamlit! The web app is still running locally, but you can also deploy it to a remote server, see [Deploy a Streamlit app](https://docs.streamlit.io/streamlit-cloud/get-started/deploy-an-app).
+
+
+
 
