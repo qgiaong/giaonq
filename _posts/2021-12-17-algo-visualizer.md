@@ -11,7 +11,7 @@ header:
   teaser: /assets/images/algo.png
   overlay_filter: 0.5
 ---
-
+[Algorithm Visualizer](https://algorithm-visualizer-javafx.herokuapp.com/)
 ![png](/assets/images/algo/algo.png)
 ![gif](/assets/images/algo/graph_cropped.gif)
 ![gif](/assets/images/algo/search_cropped.gif)
