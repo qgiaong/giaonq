@@ -198,4 +198,4 @@ send_file("sma_close.webp")
 ```
 
 # Deploy the Stock Bot on server (coming ....)
-Now as we are all set, we can deploy our bot to a server so that it checks the price every 5 minutes and sends you a Slack notice if some predefined conditions are met. We can deploy to some remote server such as Heroku, or set up a local server on Raspery Pi and deploy to it. I will come back to this in a later post.
+Now as we are all set, we can deploy our bot to a server so that it checks the price every 5 minutes and sends you a Slack notice if some predefined conditions are met. We can deploy to some remote server such as Heroku, or set up a local server on Raspberry Pi and deploy to it. I will come back to this in a later post.
