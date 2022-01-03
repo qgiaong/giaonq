@@ -1,5 +1,5 @@
 ---
-excerpt: predict the house price given other indicators
+excerpt: set up a bot to notice stock indicators
 author_profile: true
 title:  "Create a Stack Bot for Stock Indexes Notification"
 categories:
