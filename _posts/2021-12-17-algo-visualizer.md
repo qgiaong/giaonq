@@ -1,5 +1,5 @@
 ---
-excerpt: algorithms visualization with JavaFX
+excerpt: algorithms visualization with JavaFX and deploy as Web App
 author_profile: true
 title:  "Algorithm Visualization Web App with JavaFX, JPro, Docker and Heroku"
 categories:
