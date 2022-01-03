@@ -25,4 +25,6 @@ I have implemented 3 types of basic algorithms: sorting, path finding and array 
 ![gif](/assets/images/algo/sort_cropped.gif)
 
 
-For the project, I decided to follow the Model-View-Controller pattern. 
+For the project, I decided to follow the Model-View-Controller pattern. In general, the classes are organized as follows:
+![SmartSelect_20220103-174834_Noteshelf](https://user-images.githubusercontent.com/43914109/147957244-82f24806-91d2-44df-a875-5eef02908f63.jpg)
+
