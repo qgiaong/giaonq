@@ -8,11 +8,16 @@ tags:
   - regression
   - machine learning
   - data science
+  - tensorflow
 header:
   overlay_image: /assets/images/mew.jpg
   teaser: /assets/images/mew.jpg
   overlay_filter: 0.5
 ---
+
+Generative networks refer to a class of unsupervised deep learning models that learns the underlying distribution of the data and can generate new data samples. 2 subclasses of generative models are Variational Autoencoder and Generative Adversial Networks. In this blog post, we are going to employ Variational Autoencoder with Convolutional Network to train a deep learning model that learns to generate cat faces. We are building the model with Tensorflow.
+
+
 
 ```python
 from IPython import display
@@ -27,8 +32,6 @@ import tensorflow as tf
 import tensorflow_probability as tfp
 import time
 ```
-
-
 ```python
 batch_size = 64
 img_height = 64
@@ -36,7 +39,8 @@ img_width = 64
 ```
 
 # Data Preparation
-
+Let's prepare the data for training. First of all, download the data from [Kaggle](https://www.kaggle.com/spandan2/cats-faces-64x64-for-generative-models) 
+and import the image files:
 
 ```python
 imgs = []
@@ -70,7 +74,7 @@ all_data.shape, all_data.max(), all_data.min()
     ((15747, 64, 64, 3), 255, 0)
 
 
-
+Visualize some training data:
 
 ```python
 all_data = (all_data/255).astype('float32')
@@ -87,7 +91,7 @@ for i in range(15):
     
 ![png](/assets/images/mew/output_6_0.png)
     
-
+Then split the available dataset in train and test sets:
 
 
 ```python
@@ -97,7 +101,7 @@ idx = np.random.permutation(len(all_data))
 train_images = all_data[idx[:10000]]
 test_images = all_data[idx[10000:]]
 ```
-
+The last step is to create the Dataset from image files:
 
 ```python
 train_dataset = (tf.data.Dataset.from_tensor_slices(train_images).batch(batch_size))
@@ -105,6 +109,10 @@ test_dataset = (tf.data.Dataset.from_tensor_slices(test_images).batch(batch_size
 ```
 
 # Define models
+An autoen
+
+![img](https://en.wikipedia.org/wiki/File:Reparameterized_Variational_Autoencoder.png)
+*Image from Wikipedia*
 
 
 ```python
