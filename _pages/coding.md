@@ -5,7 +5,7 @@ type: pages
 author_profile: true
 
 ---
-
+Selected coding projects
 {% include group-by-array.html collection=site.posts field='coding' %}
 
 <ul>
